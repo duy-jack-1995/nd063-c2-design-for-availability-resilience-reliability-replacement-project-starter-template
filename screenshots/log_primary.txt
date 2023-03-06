@@ -1,0 +1,116 @@
+Last login: Mon Mar  6 06:08:16 2023 from ec2-18-206-107-28.compute-1.amazonaws.com
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+[ec2-user@ip-10-1-10-196 ~]$ sudo yum update
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+amzn2-core                                                                                                     | 3.7 kB  00:00:00
+No packages marked for update
+[ec2-user@ip-10-1-10-196 ~]$ sudo su
+[root@ip-10-1-10-196 ec2-user]# yum install mysql
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+Resolving Dependencies
+--> Running transaction check
+---> Package mariadb.x86_64 1:5.5.68-1.amzn2 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+======================================================================================================================================
+ Package                      Arch                        Version                               Repository                       Size
+======================================================================================================================================
+Installing:
+ mariadb                      x86_64                      1:5.5.68-1.amzn2                      amzn2-core                      8.8 M
+
+Transaction Summary
+======================================================================================================================================
+Install  1 Package
+
+Total download size: 8.8 M
+Installed size: 49 M
+Is this ok [y/d/N]: y
+Downloading packages:
+mariadb-5.5.68-1.amzn2.x86_64.rpm                                                                              | 8.8 MB  00:00:00
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : 1:mariadb-5.5.68-1.amzn2.x86_64                                                                                    1/1
+  Verifying  : 1:mariadb-5.5.68-1.amzn2.x86_64                                                                                    1/1
+
+Installed:
+  mariadb.x86_64 1:5.5.68-1.amzn2
+
+Complete!
+[root@ip-10-1-10-196 ec2-user]# mysql -u admin -h database-primary.cbqq7siwxowl.us-east-1.rds.amazonaws.com -p 3306
+Enter password:
+ERROR 1049 (42000): Unknown database '3306'
+[root@ip-10-1-10-196 ec2-user]# mysql -u admin -h database-primary.cbqq7siwxowl.us-east-1.rds.amazonaws.com -p 330mysql --version^C
+[root@ip-10-1-10-196 ec2-user]# mysql -u admin -h database-primary.cbqq7siwxowl.us-east-1.rds.amazonaws.com -p 3306^C
+[root@ip-10-1-10-196 ec2-user]# mysql --version
+mysql  Ver 15.1 Distrib 5.5.68-MariaDB, for Linux (x86_64) using readline 5.1
+[root@ip-10-1-10-196 ec2-user]# mysql -h database-primary.cbqq7siwxowl.us-east-1.rds.amazonaws.com -P 3306 -u admin -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 41
+Server version: 8.0.28 Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [(none)]> connect udacity
+Connection id:    45
+Current database: udacity
+
+MySQL [udacity]> CREATE TABLE MyGuests (
+    ->     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    ->     firstname VARCHAR(30) NOT NULL,
+    ->     lastname VARCHAR(30) NOT NULL,
+    ->     email VARCHAR(50),
+    ->     reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    -> );
+Query OK, 0 rows affected, 1 warning (0.08 sec)
+
+MySQL [udacity]> INSERT INTO MyGuests
+    ->     (firstname, lastname, email, reg_date)
+    ->     VALUES('duy', 'trong', 'duynt16@fsoft.com.vn', current_timestamp());
+Query OK, 1 row affected (0.01 sec)
+
+MySQL [udacity]> select * from udacity
+    -> select * from MyGuests
+    ->
+    ->
+    -> Ctrl-C -- exit!
+Aborted
+[root@ip-10-1-10-196 ec2-user]# mysql -h database-primary.cbqq7siwxowl.us-east-1.rds.amazonaws.com -P 3306 -u admin -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 46
+Server version: 8.0.28 Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [(none)]> connect udacity
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Connection id:    47
+Current database: udacity
+
+MySQL [udacity]> select * from MyGuests
+    -> select * from MyGuests;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from MyGuests' at line 2
+MySQL [udacity]> select * from MyGuests;
++----+-----------+----------+----------------------+---------------------+
+| id | firstname | lastname | email                | reg_date            |
++----+-----------+----------+----------------------+---------------------+
+|  1 | duy       | trong    | duynt16@fsoft.com.vn | 2023-03-06 06:23:44 |
++----+-----------+----------+----------------------+---------------------+
+1 row in set (0.00 sec)
+

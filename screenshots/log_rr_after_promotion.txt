@@ -1,0 +1,41 @@
+Last login: Mon Mar  6 07:28:16 2023 from ec2-59.153.234.147.compute-1.amazonaws.com
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+[ec2-user@ip-192-168-10-4 ~]$ sudo yum update
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+amzn2-core                                                                                                     | 3.7 kB  00:00:00
+No packages marked for update
+[ec2-user@ip-192-168-10-4 ~]$ mysql -u admin -h database-rep.cnud4dqrmour.us-west-2.rds.amazonaws.com -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 46
+Server version: 8.0.28 Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [(none)]> connect udacity
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Connection id:    11
+Current database: udacity
+
+MySQL [udacity]> INSERT INTO MyGuests
+    -> (firstname, lastname, email, reg_date)
+    -> VALUES('duy2', '1', 'john@fsoft.com.vn', current_timestamp());
+Query OK, 1 row affected (0.00 sec)
+
+MySQL [udacity]> select * from MyGuests;
++----+-----------+----------+---------------------+---------------------+
+| id | firstname | lastname | email               | reg_date            |
++----+-----------+----------+---------------------+---------------------+
+|  1 | duy       | trong    | duynt16@fsoft.com.vn | 2023-03-06 06:23:44 |
+|  2 | duy2      | 1        | duynt16@fsoft.com.vn | 2023-03-06 07:30:02 |
++----+-----------+----------+---------------------+---------------------+
+2 rows in set (0.00 sec)
